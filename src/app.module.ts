@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+// import { Task } from './tasks/task.entity';
 import { TasksModule } from './tasks/tasks.module';
 
 @Module({
@@ -13,9 +15,13 @@ import { TasksModule } from './tasks/tasks.module';
       username: 'postgres',
       password: 'postgres',
       database: 'tasks-management',
+      // entities: [__dirname + '/../**/*.entity.js'],
+      // entities: [Task],
       autoLoadEntities: true,
       synchronize: true,
     }),
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
