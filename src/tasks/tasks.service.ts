@@ -13,6 +13,15 @@ export class TasksService {
     @InjectRepository(TasksRepository)
     private tasksRepository: TasksRepository,
   ) {}
+
+  async getTaskById(id: string): Promise<Task> {
+    const found: Task = await this.tasksRepository.findOne({ where: { id } });
+    if (!found) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
+    }
+    return found;
+  }
+
   /*
   getAllTasks(): Task[] {
     return this.tasks;
@@ -36,17 +45,8 @@ export class TasksService {
     }
 
     return tasks;
-  } */
+  } 
 
-  async getTaskById(id: string): Promise<Task> {
-    const found = await this.tasksRepository.findOne(id);
-    if (!found) {
-      throw new NotFoundException(`Task with ID ${id} not found`);
-    }
-    return found;
-  }
-
-  /*
   getTaskById(id: string): Task {
     const found = this.tasks.find((task) => task.id === id);
 
